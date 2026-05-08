@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RSNA Pneumonia Detection - Project 15</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; font-size: 16px; }
+  body {
+    background: #0f172a; color: #e2e8f0;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    line-height: 1.7; min-height: 100vh;
+  }
+  nav {
+    position: sticky; top: 0; z-index: 1000;
+    background: #0f172aee; backdrop-filter: blur(12px);
+    border-bottom: 1px solid #1e293b; padding: 0.5rem 0;
+    overflow-x: auto; white-space: nowrap;
+  }
+  nav .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 1rem; display: flex; gap: 0.15rem; align-items: center; }
+  nav a { color: #94a3b8; text-decoration: none; font-size: 0.78rem; padding: 0.4rem 0.65rem; border-radius: 6px; transition: all 0.2s; flex-shrink: 0; }
+  nav a:hover, nav a:focus { color: #38bdf8; background: #1e293b; }
+  nav .nav-title { color: #38bdf8; font-weight: 700; font-size: 0.85rem; margin-right: 0.6rem; flex-shrink: 0; }
+  main { max-width: 1100px; margin: 0 auto; padding: 1.2rem 1.6rem 4rem; }
+  section { margin-bottom: 4rem; padding-top: 3.5rem; }
+  section:first-of-type { padding-top: 1rem; }
+  h1 {
+    font-size: 2.5rem; font-weight: 800; line-height: 1.2;
+    background: linear-gradient(135deg, #38bdf8, #a78bfa, #f472b6);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    margin-bottom: 0.6rem;
+  }
+  .subtitle { color: #94a3b8; font-size: 1.05rem; margin-bottom: 1.4rem; }
+  h2 {
+    font-size: 1.7rem; font-weight: 700; color: #38bdf8;
+    margin-bottom: 1.2rem; padding-bottom: 0.4rem; border-bottom: 2px solid #1e293b;
+  }
+  h3 { font-size: 1.18rem; font-weight: 600; margin: 1.4rem 0 0.6rem; color: #a78bfa; }
+  p { margin-bottom: 0.9rem; }
+  ul, ol { margin: 0.5rem 0 1rem 1.6rem; }
+  li { margin-bottom: 0.35rem; }
+  strong { color: #f8fafc; }
+  a { color: #38bdf8; text-decoration: none; border-bottom: 1px dashed #1e293b; }
+  a:hover { color: #a78bfa; border-bottom-color: #a78bfa; }
+  .box { border-radius: 10px; padding: 1.1rem 1.3rem; margin: 1rem 0 1.2rem; }
+  .box-pink   { background: #f472b610; border-left: 4px solid #f472b6; }
+  .box-green  { background: #34d39910; border-left: 4px solid #34d399; }
+  .box-blue   { background: #38bdf810; border-left: 4px solid #38bdf8; }
+  .box-purple { background: #a78bfa10; border-left: 4px solid #a78bfa; }
+  .box-amber  { background: #fbbf2410; border-left: 4px solid #fbbf24; }
+  pre { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 1.1rem 1.3rem; overflow-x: auto; margin: 0.8rem 0 1.2rem; }
+  pre code { font-family: 'Cascadia Code', 'Consolas', monospace; font-size: 0.85rem; line-height: 1.6; color: #e2e8f0; }
+  p code, li code, td code { background: #1e293b; padding: 0.15rem 0.4rem; border-radius: 4px; font-family: 'Cascadia Code', 'Consolas', monospace; font-size: 0.88em; color: #38bdf8; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.92rem; }
+  th, td { padding: 0.6rem 0.9rem; text-align: left; border-bottom: 1px solid #1e293b; }
+  th { background: #1e293b; color: #38bdf8; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.04em; }
+  tr:hover { background: #1e293b40; }
+  .hero {
+    background: linear-gradient(135deg, #0f172a, #1e293b 60%, #0f172a);
+    padding: 3rem 2rem; border-radius: 16px; margin-bottom: 2rem;
+    border: 1px solid #334155; text-align: left;
+  }
+  .hero .meta { color: #94a3b8; font-size: 0.95rem; margin-top: 1rem; }
+  .meta-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.8rem; margin-top: 1rem; }
+  .meta-grid .item { background: #1e293b; padding: 0.7rem 0.9rem; border-radius: 8px; border-left: 3px solid #38bdf8; }
+  .meta-grid .item .lbl { display: block; font-size: 0.7rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.2rem; }
+  .meta-grid .item .val { font-weight: 700; color: #e2e8f0; font-size: 0.95rem; }
+  img { max-width: 100%; height: auto; border-radius: 10px; margin: 0.8rem 0; border: 1px solid #1e293b; }
+  footer { text-align: center; color: #64748b; font-size: 0.85rem; padding: 2rem 1rem; border-top: 1px solid #1e293b; margin-top: 3rem; }
+</style>
+</head>
+<body>
+<nav><div class="nav-inner">
+  <span class="nav-title">Project 15: RSNA Pneumonia</span>
+  <a href="#overview">Overview</a>
+  <a href="#motivation">Motivation</a>
+  <a href="#data">Data</a>
+  <a href="#methods">Methods</a>
+  <a href="#baseline">Baseline</a>
+  <a href="#advanced">Advanced</a>
+  <a href="#discussion">Discussion</a>
+  <a href="#conclusion">Conclusion</a>
+  <a href="#refs">References</a>
+</div></nav>
+<main>
+
+<section id="overview" class="hero">
+  <h1>RSNA Pneumonia Detection</h1>
+  <div class="subtitle">Object detection on frontal chest radiographs (DICOM): localise pneumonia opacities with bounding boxes. Phase 1 scaffold, Liora MLE Cohort 6973.</div>
+  <div class="meta-grid">
+    <div class="item"><span class="lbl">Task</span><span class="val">Object detection (bounding box)</span></div>
+    <div class="item"><span class="lbl">Modality</span><span class="val">Chest X-ray (DICOM)</span></div>
+    <div class="item"><span class="lbl">Records</span><span class="val">~26,684 patient studies</span></div>
+    <div class="item"><span class="lbl">Baseline</span><span class="val">RetinaNet ResNet50-FPN + focal</span></div>
+    <div class="item"><span class="lbl">Advanced</span><span class="val">YOLOv8s + CLAHE + heavy aug</span></div>
+    <div class="item"><span class="lbl">Metric</span><span class="val">mAP @ IoU 0.40-0.75</span></div>
+  </div>
+</section>
+
+<section id="motivation">
+  <h2>Motivation</h2>
+  <p>Chest radiography is the highest-volume medical imaging exam. Pneumonia is among its most common indications. Inter-radiologist agreement on opacity extent is moderate, and demand frequently exceeds the supply of subspecialty chest radiologists. A model that <em>localises</em> pneumonia opacities (rather than only classifying the image) is more useful clinically because it supports an assistive workflow in which the radiologist remains the decision-maker.</p>
+  <div class="box box-blue">
+    <strong>Why bounding boxes, not just labels?</strong> A heatmap or box that aligns with the radiologist's reading is auditable and trustworthy. A scalar output is not.
+  </div>
+</section>
+
+<section id="data">
+  <h2>Data</h2>
+  <p><strong>Source:</strong> RSNA Pneumonia Detection Challenge (Kaggle, 2018), a re-annotated subset of the NIH ChestX-ray dataset, with bounding-box ground truth produced by a panel of board-certified radiologists.</p>
+  <ul>
+    <li>~26,684 patient studies in <code>stage_2_train_images/</code> (DICOM, ~1024 x 1024)</li>
+    <li>~3,000 hidden test studies in <code>stage_2_test_images/</code></li>
+    <li>One row per bounding box in <code>stage_2_train_labels.csv</code> (multi-row per patient)</li>
+    <li>Three-class metadata in <code>stage_2_detailed_class_info.csv</code>: Normal, No Lung Opacity / Not Normal, Lung Opacity</li>
+    <li>~22-30 percent positive at the patient level</li>
+  </ul>
+  <div class="box box-amber">
+    <strong>The middle class matters.</strong> "No Lung Opacity / Not Normal" patients have non-pneumonia abnormalities (cardiomegaly, effusion, atelectasis). A binary opacity-vs-rest model that ignores this stratum will silently underperform when deployed on a real clinical mix.
+  </div>
+  <p>Total dataset size is ~3.7 GB. Per Liora Phase 1 rules, the dataset is documented but not downloaded; full <code>kaggle competitions download -c rsna-pneumonia-detection-challenge</code> instructions live in <code>data/README.md</code>.</p>
+</section>
+
+<section id="methods">
+  <h2>Methods</h2>
+  <h3>Pre-processing pipeline</h3>
+  <ol>
+    <li>Read DICOM with <code>pydicom</code></li>
+    <li>Min-max normalise pixel array, scale to uint8</li>
+    <li>Resize to 512 (baseline) or 640 (advanced) pixels</li>
+    <li>Apply CLAHE (Contrast Limited Adaptive Histogram Equalisation), clip 2.0, tile 8x8</li>
+    <li>Replicate single channel to 3 channels for ImageNet-pretrained backbone</li>
+  </ol>
+  <h3>Train/val split</h3>
+  <p>85/15 patient-level split, stratified on the per-patient maximum Target. Seed pinned to 42. Splits never cross patients.</p>
+  <h3>Evaluation</h3>
+  <p>Baseline: mAP@0.5 with eleven-point interpolated AP across validation images (Pascal-VOC style). Advanced: mAP@0.5, mAP@0.5:0.95 (Pascal), and the official RSNA challenge metric averaged over IoU 0.40 to 0.75 in 0.05 steps.</p>
+</section>
+
+<section id="baseline">
+  <h2>Baseline: RetinaNet ResNet50-FPN with focal loss</h2>
+  <ul>
+    <li>Backbone: ResNet50 + FPN, ImageNet-pretrained</li>
+    <li>Loss: focal loss (Lin 2017), bias init b = -4.6 for foreground prior 0.01</li>
+    <li>Optimiser: AdamW, lr 1e-4, weight decay 1e-4</li>
+    <li>Schedule: cosine, 6 epochs, batch size 4 at 512 x 512</li>
+    <li>Implementation: torchvision <code>retinanet_resnet50_fpn_v2</code></li>
+  </ul>
+  <div class="box box-purple">
+    <strong>Why RetinaNet for the baseline?</strong> Focal loss directly addresses the foreground-background imbalance that single-stage dense detectors face on RSNA. The implementation is short, auditable, and integrates with torchvision references.
+  </div>
+  <h3>Results placeholder</h3>
+  <table>
+    <thead><tr><th>Metric</th><th>Value</th></tr></thead>
+    <tbody>
+      <tr><td>Validation mAP@0.5</td><td>&lt;TBD after model run&gt;</td></tr>
+      <tr><td>Mean training loss (final epoch)</td><td>&lt;TBD after model run&gt;</td></tr>
+      <tr><td>Inference time per image (CPU)</td><td>&lt;TBD after model run&gt;</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="advanced">
+  <h2>Advanced: YOLOv8s with CLAHE + heavy augmentation</h2>
+  <ul>
+    <li>Architecture: Ultralytics YOLOv8s, anchor-free, decoupled heads</li>
+    <li>Pre-processing: DICOM-to-PNG with CLAHE applied during conversion</li>
+    <li>Resolution: 640 x 640, batch size 8, 30 epochs, patience 10</li>
+    <li>Augmentation: mosaic 1.0, mixup 0.15, translate 0.1, scale 0.5, fliplr 0.5</li>
+    <li>Anatomy guard: vertical flip disabled (heart is on the left)</li>
+    <li>Comparator: Faster R-CNN ResNet50-FPN-v2 (torchvision)</li>
+    <li>Out-of-scope: Detectron2 (compiled CUDA ops complicate Phase 1 install)</li>
+  </ul>
+  <h3>Results placeholder</h3>
+  <table>
+    <thead><tr><th>Metric</th><th>Value</th></tr></thead>
+    <tbody>
+      <tr><td>Validation mAP@0.5</td><td>&lt;TBD after model run&gt;</td></tr>
+      <tr><td>Validation mAP@0.5:0.95</td><td>&lt;TBD after model run&gt;</td></tr>
+      <tr><td>RSNA challenge metric (0.40-0.75)</td><td>&lt;TBD after model run&gt;</td></tr>
+      <tr><td>Faster R-CNN comparator mAP@0.5</td><td>&lt;TBD after model run&gt;</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="discussion">
+  <h2>Discussion</h2>
+  <h3>Dataset bias is the elephant in the room</h3>
+  <p>Zech et al. (2018) showed that a CXR pneumonia model exploited site-specific tokens (chest tubes, AP-vs-PA view, image-marker patterns) rather than disease features, and degraded sharply on radiographs from a different hospital. Our scaffold mitigates the most obvious traps (stratified split, preserved detailed-class metadata) but does not pretend to provide external validation.</p>
+  <h3>Industrial vs medical CV (twin: project 10 Severstal)</h3>
+  <p>Both projects are large-image, class-imbalanced, IoU-evaluated detection tasks. Industrial defects have crisp edges, deterministic illumination, and replicable ground truth. Medical opacities have soft edges, ambiguous extent, and probabilistic ground truth. The same backbone (ResNet50-FPN) is competitive in both, but the failure modes differ: industrial models fail on illumination shift, medical models fail on site/scanner shift.</p>
+  <h3>Comparison with project 8 (COVID X-rays)</h3>
+  <p>Project 8 uses the same modality with a classification framing. Both should cite the same Zech 2018 critique and the same Majkowska 2020 evaluation framework. The pre-processing (CLAHE) and backbone (ResNet50/DenseNet) are shared.</p>
+  <h3>Limitations</h3>
+  <ul>
+    <li>Single dataset, single site distribution; no external validation</li>
+    <li>Hidden Kaggle test set is not used; reported numbers are from the public validation split only</li>
+    <li>No ensembling, no test-time augmentation, no multi-scale inference</li>
+    <li>Aggregate mAP can hide localisation issues; per-image error inspection is needed</li>
+  </ul>
+</section>
+
+<section id="conclusion">
+  <h2>Conclusion</h2>
+  <p>Phase 1 produces a clean, runnable scaffold for pneumonia-opacity detection on the RSNA dataset. Two pipelines (RetinaNet baseline; YOLOv8 advanced + Faster R-CNN comparator) are documented end-to-end. Numerical results in this presentation are placeholders to be filled by Phase 2 by reading model-output JSON at build time, never by transcription.</p>
+  <div class="box box-green">
+    <strong>Phase 2 readiness checklist.</strong> Accept Kaggle competition rules, run the documented <code>kaggle</code> CLI command, run <code>python src/model_baseline.py</code> then <code>python src/model_advanced.py</code>, then re-run the manuscript and presentation builds with the resulting metrics JSON files.
+  </div>
+</section>
+
+<section id="refs">
+  <h2>Top references</h2>
+  <ol>
+    <li>Lin TY et al. Focal Loss for Dense Object Detection. ICCV 2017. DOI:10.1109/ICCV.2017.324</li>
+    <li>Ren S, He K, Girshick R, Sun J. Faster R-CNN. IEEE TPAMI 2017. DOI:10.1109/TPAMI.2016.2577031</li>
+    <li>Wang X et al. ChestX-Ray8. CVPR 2017. DOI:10.1109/CVPR.2017.369</li>
+    <li>Shih G et al. Augmenting the NIH Chest Radiograph Dataset with Expert Annotations of Possible Pneumonia. Radiology AI 2019. DOI:10.1148/ryai.2019180041</li>
+    <li>Zech JR et al. Variable Generalization Performance of a Deep Learning Model to Detect Pneumonia in Chest Radiographs. PLOS Medicine 2018. DOI:10.1371/journal.pmed.1002683</li>
+  </ol>
+  <p>Full list (26 verified entries) in <code>reports/references.md</code>. Each entry was verified live against CrossRef at scaffolding time.</p>
+</section>
+
+<footer>
+  Liora MLE Programme - Cohort 6973 - Phase 1 scaffold - Sandeep Grover
+</footer>
+
+</main>
+</body>
+</html>
