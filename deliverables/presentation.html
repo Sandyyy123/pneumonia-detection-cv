@@ -87,7 +87,7 @@
 
 <section id="overview" class="hero">
   <h1>RSNA Pneumonia Detection</h1>
-  <div class="subtitle">Object detection on frontal chest radiographs (DICOM): localise pneumonia opacities with bounding boxes. Phase 1 scaffold, Liora MLE Cohort 6973.</div>
+  <div class="subtitle">Object detection on frontal chest radiographs (DICOM): localise pneumonia opacities with bounding boxes. Initial implementation, Portfolio MLE .</div>
   <div class="meta-grid">
     <div class="item"><span class="lbl">Task</span><span class="val">Object detection (bounding box)</span></div>
     <div class="item"><span class="lbl">Modality</span><span class="val">Chest X-ray (DICOM)</span></div>
@@ -119,7 +119,7 @@
   <div class="box box-amber">
     <strong>The middle class matters.</strong> "No Lung Opacity / Not Normal" patients have non-pneumonia abnormalities (cardiomegaly, effusion, atelectasis). A binary opacity-vs-rest model that ignores this stratum will silently underperform when deployed on a real clinical mix.
   </div>
-  <p>Total dataset size is ~3.7 GB. Per Liora Phase 1 rules, the dataset is documented but not downloaded; full <code>kaggle competitions download -c rsna-pneumonia-detection-challenge</code> instructions live in <code>data/README.md</code>.</p>
+  <p>Total dataset size is ~3.7 GB. Per Project layout
 </section>
 
 <section id="methods">
@@ -170,7 +170,7 @@
     <li>Augmentation: mosaic 1.0, mixup 0.15, translate 0.1, scale 0.5, fliplr 0.5</li>
     <li>Anatomy guard: vertical flip disabled (heart is on the left)</li>
     <li>Comparator: Faster R-CNN ResNet50-FPN-v2 (torchvision)</li>
-    <li>Out-of-scope: Detectron2 (compiled CUDA ops complicate Phase 1 install)</li>
+    <li>Out-of-scope: Detectron2 (compiled CUDA ops complicate v1.0 install)</li>
   </ul>
   <h3>Results placeholder</h3>
   <table>
@@ -187,7 +187,7 @@
 <section id="discussion">
   <h2>Discussion</h2>
   <h3>Dataset bias is the elephant in the room</h3>
-  <p>Zech et al. (2018) showed that a CXR pneumonia model exploited site-specific tokens (chest tubes, AP-vs-PA view, image-marker patterns) rather than disease features, and degraded sharply on radiographs from a different hospital. Our scaffold mitigates the most obvious traps (stratified split, preserved detailed-class metadata) but does not pretend to provide external validation.</p>
+  <p>Zech et al. (2018) showed that a CXR pneumonia model exploited site-specific tokens (chest tubes, AP-vs-PA view, image-marker patterns) rather than disease features, and degraded sharply on radiographs from a different hospital. Our implementation mitigates the most obvious traps (stratified split, preserved detailed-class metadata) but does not pretend to provide external validation.</p>
   <h3>Industrial vs medical CV (twin: project 10 Severstal)</h3>
   <p>Both projects are large-image, class-imbalanced, IoU-evaluated detection tasks. Industrial defects have crisp edges, deterministic illumination, and replicable ground truth. Medical opacities have soft edges, ambiguous extent, and probabilistic ground truth. The same backbone (ResNet50-FPN) is competitive in both, but the failure modes differ: industrial models fail on illumination shift, medical models fail on site/scanner shift.</p>
   <h3>Comparison with project 8 (COVID X-rays)</h3>
@@ -203,9 +203,9 @@
 
 <section id="conclusion">
   <h2>Conclusion</h2>
-  <p>Phase 1 produces a clean, runnable scaffold for pneumonia-opacity detection on the RSNA dataset. Two pipelines (RetinaNet baseline; YOLOv8 advanced + Faster R-CNN comparator) are documented end-to-end. Numerical results in this presentation are placeholders to be filled by Phase 2 by reading model-output JSON at build time, never by transcription.</p>
+  <p>v1.0 produces a clean, runnable implementation for pneumonia-opacity detection on the RSNA dataset. Two pipelines (RetinaNet baseline; YOLOv8 advanced + Faster R-CNN comparator) are documented end-to-end. Numerical results in this presentation are placeholders to be filled by v1.0 by reading model-output JSON at build time, never by transcription.</p>
   <div class="box box-green">
-    <strong>Phase 2 readiness checklist.</strong> Accept Kaggle competition rules, run the documented <code>kaggle</code> CLI command, run <code>python src/model_baseline.py</code> then <code>python src/model_advanced.py</code>, then re-run the manuscript and presentation builds with the resulting metrics JSON files.
+    <strong>v1.0 readiness checklist.</strong> Accept Kaggle competition rules, run the documented <code>kaggle</code> CLI command, run <code>python src/model_baseline.py</code> then <code>python src/model_advanced.py</code>, then re-run the manuscript and presentation builds with the resulting metrics JSON files.
   </div>
 </section>
 
@@ -218,11 +218,11 @@
     <li>Shih G et al. Augmenting the NIH Chest Radiograph Dataset with Expert Annotations of Possible Pneumonia. Radiology AI 2019. DOI:10.1148/ryai.2019180041</li>
     <li>Zech JR et al. Variable Generalization Performance of a Deep Learning Model to Detect Pneumonia in Chest Radiographs. PLOS Medicine 2018. DOI:10.1371/journal.pmed.1002683</li>
   </ol>
-  <p>Full list (26 verified entries) in <code>reports/references.md</code>. Each entry was verified live against CrossRef at scaffolding time.</p>
+  <p>Full list (26 verified entries) in <code>reports/references.md</code>. Each entry was verified live against CrossRef at implementation time.</p>
 </section>
 
 <footer>
-  Liora MLE Programme - Cohort 6973 - Phase 1 scaffold - Sandeep Grover
+  Portfolio MLE Programme -  - Initial implementation - Sandeep Grover
 </footer>
 
 </main>

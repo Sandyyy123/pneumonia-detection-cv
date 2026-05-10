@@ -1,6 +1,6 @@
 # References - RSNA Pneumonia Detection
 
-All entries below were verified live against CrossRef (https://api.crossref.org/works/{doi}) at scaffolding time. Per project rules, volume/issue/pages are omitted to avoid fabrication. Format: Author. Title. Journal. Year. DOI.
+All entries below were verified live against CrossRef (https://api.crossref.org/works/{doi}) at implementation time. Per project rules, volume/issue/pages are omitted to avoid fabrication. Format: Author. Title. Journal. Year. DOI.
 
 ## Object detection methodology
 
@@ -57,7 +57,7 @@ Independent literature scan (2024-2026), verified live against Europe PMC and Cr
 
 ## State-of-the-art callout: gaps in current `reports/references.md`
 
-The existing reference list is methodologically strong on classical detectors (RetinaNet/FPN/Faster R-CNN/YOLOv1-v2/SSD/Mask R-CNN), CNN backbones (ResNet/DenseNet/MobileNetV2), and the canonical CXR ecosystem (ChestX-Ray8, CheXNeXt, RSNA descriptor, Zech, Majkowska). Five concrete gaps the project SHOULD cite before Phase 2:
+The existing reference list is methodologically strong on classical detectors (RetinaNet/FPN/Faster R-CNN/YOLOv1-v2/SSD/Mask R-CNN), CNN backbones (ResNet/DenseNet/MobileNetV2), and the canonical CXR ecosystem (ChestX-Ray8, CheXNeXt, RSNA descriptor, Zech, Majkowska). Five concrete gaps the project SHOULD cite before v1.0:
 
 1. **Foundation models for CXR.** Yao 2025 (EVA-X) and Yang 2025 (CXR-FM with global+local representations) report that self-supervised CXR pretraining cuts the labelled-data budget for downstream detection by 2-3x. The manuscript already flags this in Section 5.7 "Future work" but cites no 2024-2026 anchor.
 2. **YOLOv8 (and v11/v12) primary citations.** The advanced model is YOLOv8 but the existing references only cite YOLOv1 (Redmon 2016) and YOLO9000. A current-generation YOLO citation (Sahingoz 2026 systematic review v1-v12; Mao 2026 YOLOv12 lung nodule) is needed.

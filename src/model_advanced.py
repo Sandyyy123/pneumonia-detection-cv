@@ -14,17 +14,17 @@ Alternatives considered:
   small/medium boxes, slower per epoch. Built optionally below as
   `train_faster_rcnn()` for direct comparison.
 - Detectron2 RetinaNet/Faster-RCNN. More complex install (compiled CUDA ops);
-  considered out of scope for Phase 1 but flagged in the manuscript.
+  considered out of scope for v1.0 but flagged in the manuscript.
 
 Evaluation metric: mAP averaged over IoU thresholds 0.40 to 0.75 in 0.05 steps
 (the official RSNA challenge metric). Computed via the helper in
 `model_baseline.py`.
 
-This file is runnable but NOT executed during scaffolding. Phase 1 deliverable.
+This file is runnable but NOT executed during implementation. v1.0 deliverable.
 
 Run later with:
 
-    cd /root/AI/liora_projects/15_rsna_pneumonia
+    cd /root/AI/project_root
     python src/model_advanced.py
 
 Dependencies: ultralytics (YOLOv8), torch, torchvision, pydicom, opencv-python,
@@ -46,7 +46,7 @@ from sklearn.model_selection import train_test_split
 from tqdm import tqdm
 
 # Lazy imports of torch / ultralytics / albumentations live inside functions so
-# the file imports cleanly even if a sub-dependency is missing in scaffolding.
+# the file imports cleanly even if a sub-dependency is missing in implementation.
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA_DIR = ROOT / "data"

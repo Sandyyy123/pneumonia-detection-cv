@@ -6,20 +6,20 @@ Kaggle competition: [rsna-pneumonia-detection-challenge](https://www.kaggle.com/
 
 Hosted by the Radiological Society of North America (RSNA) in partnership with Kaggle, the US National Institutes of Health (NIH), and the Society of Thoracic Radiology, 2018.
 
-## Why not downloaded in Phase 1
+## Why not downloaded in v1.0
 
 - Total size: ~3.7 GB compressed (DICOM imagery is large per file).
 - Access: Kaggle competition rules require the user to log in, accept the competition rules, and join the competition once before the CLI download will succeed.
-- Per Liora Phase 1 rules, datasets larger than 2 GB and gated by competition acceptance are documented only.
+- Per Project layout
 
-## Download instructions (run in main session, not in scaffold)
+## Download instructions (run in main session, not in implementation)
 
 1. Accept the rules at <https://www.kaggle.com/competitions/rsna-pneumonia-detection-challenge/rules>.
 2. Confirm Kaggle CLI auth is in place: `~/.kaggle/kaggle.json` (chmod 600).
 3. From this folder, run:
 
 ```bash
-cd /root/AI/liora_projects/15_rsna_pneumonia/data
+cd /root/AI/project_root/data
 kaggle competitions download -c rsna-pneumonia-detection-challenge
 unzip -q rsna-pneumonia-detection-challenge.zip
 unzip -q stage_2_train_images.zip -d stage_2_train_images

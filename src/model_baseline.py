@@ -9,11 +9,11 @@ Evaluation metric for the baseline: mean Average Precision at IoU threshold 0.5
 (mAP@0.5). The official RSNA challenge metric averages across IoU 0.40 to 0.75
 in 0.05 steps; that is computed in the advanced script.
 
-This file is runnable but NOT executed during scaffolding. Phase 1 deliverable.
+This file is runnable but NOT executed during implementation. v1.0 deliverable.
 
 Run later (main session) with:
 
-    cd /root/AI/liora_projects/15_rsna_pneumonia
+    cd /root/AI/project_root
     python src/model_baseline.py
 
 Dependencies: torch, torchvision, pydicom, numpy, pandas, opencv-python, tqdm,
