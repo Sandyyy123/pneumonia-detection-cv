@@ -19,7 +19,7 @@ Hosted by the Radiological Society of North America (RSNA) in partnership with K
 3. From this folder, run:
 
 ```bash
-cd /root/AI/project_root/data
+cd data/
 kaggle competitions download -c rsna-pneumonia-detection-challenge
 unzip -q rsna-pneumonia-detection-challenge.zip
 unzip -q stage_2_train_images.zip -d stage_2_train_images
