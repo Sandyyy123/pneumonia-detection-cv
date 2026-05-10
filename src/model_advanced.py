@@ -24,7 +24,7 @@ This file is runnable but NOT executed during implementation. v1.0 deliverable.
 
 Run later with:
 
-    cd /root/AI/project_root
+    cd .
     python src/model_advanced.py
 
 Dependencies: ultralytics (YOLOv8), torch, torchvision, pydicom, opencv-python,
