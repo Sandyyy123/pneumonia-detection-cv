@@ -13,7 +13,7 @@ This file is runnable but NOT executed during implementation. v1.0 deliverable.
 
 Run later (main session) with:
 
-    cd /root/AI/project_root
+    cd .
     python src/model_baseline.py
 
 Dependencies: torch, torchvision, pydicom, numpy, pandas, opencv-python, tqdm,
